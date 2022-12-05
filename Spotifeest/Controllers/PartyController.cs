@@ -38,6 +38,21 @@ namespace Spotifeest.Controllers
         [HttpPost]
         public Party Post([FromBody] Party party)
         {
+            PartyCodeGenerator pcg = new PartyCodeGenerator();
+            string code = pcg.Main();
+            
+            IEnumerable<Party> test = _partydbContext.party;
+            
+            foreach(Party u in test)
+            {
+                if(u.Code.Equals(code)) {
+                    code = pcg.Main();
+                }
+                else {
+                    party.Code = code;
+                }
+            }
+
             _partydbContext.Add(party);
             _partydbContext.SaveChanges();
             return party;

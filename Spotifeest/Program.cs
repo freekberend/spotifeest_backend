@@ -1,5 +1,6 @@
 using DataLayer;
 using Microsoft.EntityFrameworkCore;
+using Spotifeest;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -37,5 +38,7 @@ app.UseHttpsRedirection();
 app.UseAuthorization();
 
 app.MapControllers();
+
+PartyCodeGenerator newcode = new PartyCodeGenerator();
 
 app.Run();
