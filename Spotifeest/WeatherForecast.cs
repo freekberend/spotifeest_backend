@@ -1,3 +1,5 @@
+//Placeholder Class for reference
+
 namespace Spotifeest
 {
     public class WeatherForecast
