@@ -21,7 +21,7 @@ namespace Spotifeest.Controllers
         [HttpGet]
         public IEnumerable<Party> Get()
         {
-            return _partydbContext.party;
+            return _partydbContext.parties;
         }
 
         // GET api/<PartyController>/5
@@ -41,7 +41,7 @@ namespace Spotifeest.Controllers
             PartyCodeGenerator pcg = new PartyCodeGenerator();
             string code = pcg.Main();
             
-            IEnumerable<Party> test = _partydbContext.party;
+            IEnumerable<Party> test = _partydbContext.parties;
             
             foreach(Party u in test)
             {

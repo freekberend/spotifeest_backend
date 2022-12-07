@@ -39,6 +39,4 @@ app.UseAuthorization();
 
 app.MapControllers();
 
-PartyCodeGenerator newcode = new PartyCodeGenerator();
-
 app.Run();

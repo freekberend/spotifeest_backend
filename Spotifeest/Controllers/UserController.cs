@@ -1,6 +1,7 @@
 ﻿using DataLayer;
 using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
+using System.IO;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -21,7 +22,7 @@ namespace Spotifeest.Controllers
         [HttpGet]
         public IEnumerable<string> Get()
         {
-            return new string[] { "value1", "value2" };
+            return new string[] { "value1", "value2", "value3" };
         }
 
         // GET api/<UserController>/5
@@ -37,6 +38,22 @@ namespace Spotifeest.Controllers
         [HttpPost]
         public User Post([FromBody] User user)
         {
+            TokenGenerator utg = new TokenGenerator();
+            string token = utg.Main();
+
+            IEnumerable<User> test = _mdc.users;
+
+            foreach (User u in test)
+            {
+                if (u.Token.Equals(token))
+                {
+                    token = utg.Main();
+                }
+                else
+                {
+                    user.Token = token;
+                }
+            }
             _mdc.Add(user);
             _mdc.SaveChanges();
             return user;
