@@ -11,5 +11,7 @@ namespace DataLayer
         public int Id { get; set; }
         public string Code { get; set; }
         public string PartyName { get; set; }
+        public string PartyOwner { get; set; }
+
     }
 }
