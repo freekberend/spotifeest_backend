@@ -22,7 +22,7 @@ namespace Spotifeest.Controllers
         [HttpGet]
         public IEnumerable<string> Get()
         {
-            return new string[] { "value1", "value2", "value3" };
+            return new string[] { "value1", "value2", "value3", "value4" };
         }
 
         // GET api/<UserController>/5
@@ -57,6 +57,23 @@ namespace Spotifeest.Controllers
             _mdc.Add(user);
             _mdc.SaveChanges();
             return user;
+        }
+
+        // POST api/<UserController>
+        [EnableCors]
+        [Route("loginuser")]
+        [HttpPost]
+        public User LoginPost([FromBody] User user)
+        {
+            try
+            {
+                User gevondenUser = _mdc.users.Where(u => u.Email.Equals(user.Email)).Where(u => u.Password.Equals(user.Password)).Single();
+                return gevondenUser;
+            }
+            catch (Exception ex)
+            {
+                return null;
+            }
         }
 
         // PUT api/<UserController>/5
