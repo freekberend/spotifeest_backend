@@ -4,6 +4,7 @@ using DataLayer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace DataLayer.Migrations
 {
     [DbContext(typeof(DatabaseContext))]
-    partial class DatabaseContextModelSnapshot : ModelSnapshot
+    [Migration("20221212093941_TweedeMigratie")]
+    partial class TweedeMigratie
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -30,24 +33,19 @@ namespace DataLayer.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<string>("FeestCode")
+                    b.Property<string>("PartyName")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("FeestNaam")
+                    b.Property<string>("PartyOwner")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("FeestOwner")
+                    b.Property<string>("RoomCode")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("FeestVoorkeurId")
-                        .HasColumnType("int");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("FeestVoorkeurId");
 
                     b.ToTable("parties");
                 });
@@ -60,15 +58,15 @@ namespace DataLayer.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<string>("Voorkeur1")
+                    b.Property<string>("Preference1")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Voorkeur2")
+                    b.Property<string>("Preference2")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Voorkeur3")
+                    b.Property<string>("Preference3")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
@@ -85,9 +83,6 @@ namespace DataLayer.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<int>("FeestId")
-                        .HasColumnType("int");
-
                     b.Property<string>("Genre1")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -101,8 +96,6 @@ namespace DataLayer.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("FeestId");
 
                     b.ToTable("preferences");
                 });
@@ -167,28 +160,6 @@ namespace DataLayer.Migrations
                     b.ToTable("users");
                 });
 
-            modelBuilder.Entity("DataLayer.Party", b =>
-                {
-                    b.HasOne("DataLayer.PartyPreference", "FeestVoorkeur")
-                        .WithMany()
-                        .HasForeignKey("FeestVoorkeurId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("FeestVoorkeur");
-                });
-
-            modelBuilder.Entity("DataLayer.Preference", b =>
-                {
-                    b.HasOne("DataLayer.Party", "Feest")
-                        .WithMany()
-                        .HasForeignKey("FeestId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Feest");
-                });
-
             modelBuilder.Entity("DataLayer.Song", b =>
                 {
                     b.HasOne("DataLayer.Party", null)
@@ -199,13 +170,13 @@ namespace DataLayer.Migrations
             modelBuilder.Entity("DataLayer.User", b =>
                 {
                     b.HasOne("DataLayer.Party", null)
-                        .WithMany("FeestVisitors")
+                        .WithMany("PartyVisitors")
                         .HasForeignKey("PartyId");
                 });
 
             modelBuilder.Entity("DataLayer.Party", b =>
                 {
-                    b.Navigation("FeestVisitors");
+                    b.Navigation("PartyVisitors");
 
                     b.Navigation("Playlist");
                 });
