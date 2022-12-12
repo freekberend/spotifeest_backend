@@ -45,11 +45,11 @@ namespace Spotifeest.Controllers
             
             foreach(Party u in test)
             {
-                if(u.Code.Equals(code)) {
+                if(u.FeestCode.Equals(code)) {
                     code = pcg.Main();
                 }
                 else {
-                    party.Code = code;
+                    party.FeestCode = code;
                 }
             }
 
