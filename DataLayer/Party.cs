@@ -23,7 +23,7 @@ namespace DataLayer
                 FeestVisitors = value;
             }
         }
-        public string FeestOwner { get; set; }
+        public User FeestOwner { get; set; }
         public List<Song> Playlist
         {
             get
