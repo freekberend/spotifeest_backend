@@ -9,7 +9,6 @@ namespace DataLayer
     public class Party
     {
         public int Id { get; set; }
-        public PartyPreference FeestVoorkeur { get; set; }
         public string FeestCode { get; set; }
         public string FeestNaam { get; set; }
         public List<User> FeestVisitors
@@ -24,19 +23,7 @@ namespace DataLayer
             }
         }
         public User FeestOwner { get; set; }
-        public List<Song> Playlist
-        {
-            get
-            {
-                return Playlist;
-            }
-            set
-            {
-                Playlist = value;
-            }
-        }
 
-
-
+        //public string Playlist
     }
 }
