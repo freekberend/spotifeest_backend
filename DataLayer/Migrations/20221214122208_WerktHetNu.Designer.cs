@@ -4,6 +4,7 @@ using DataLayer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace DataLayer.Migrations
 {
     [DbContext(typeof(DatabaseContext))]
-    partial class DatabaseContextModelSnapshot : ModelSnapshot
+    [Migration("20221214122208_WerktHetNu")]
+    partial class WerktHetNu
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -124,36 +127,6 @@ namespace DataLayer.Migrations
                     b.ToTable("users");
                 });
 
-            modelBuilder.Entity("DataLayer.UserParty", b =>
-                {
-                    b.Property<int>("partyId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("userId")
-                        .HasColumnType("int");
-
-                    b.HasIndex("partyId");
-
-                    b.HasIndex("userId");
-
-                    b.ToTable("userparties");
-                });
-
-            modelBuilder.Entity("DataLayer.UserPreference", b =>
-                {
-                    b.Property<int>("preferenceId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("userId")
-                        .HasColumnType("int");
-
-                    b.HasIndex("preferenceId");
-
-                    b.HasIndex("userId");
-
-                    b.ToTable("userpreferences");
-                });
-
             modelBuilder.Entity("DataLayer.Party", b =>
                 {
                     b.HasOne("DataLayer.User", "FeestOwner")
@@ -181,44 +154,6 @@ namespace DataLayer.Migrations
                     b.HasOne("DataLayer.Party", null)
                         .WithMany("FeestVisitors")
                         .HasForeignKey("PartyId");
-                });
-
-            modelBuilder.Entity("DataLayer.UserParty", b =>
-                {
-                    b.HasOne("DataLayer.Party", "party")
-                        .WithMany()
-                        .HasForeignKey("partyId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("DataLayer.User", "user")
-                        .WithMany()
-                        .HasForeignKey("userId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("party");
-
-                    b.Navigation("user");
-                });
-
-            modelBuilder.Entity("DataLayer.UserPreference", b =>
-                {
-                    b.HasOne("DataLayer.Preference", "preference")
-                        .WithMany()
-                        .HasForeignKey("preferenceId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("DataLayer.User", "user")
-                        .WithMany()
-                        .HasForeignKey("userId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("preference");
-
-                    b.Navigation("user");
                 });
 
             modelBuilder.Entity("DataLayer.Party", b =>
