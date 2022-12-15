@@ -84,10 +84,28 @@ namespace Spotifeest.Controllers
         }
 
         [HttpPost("slarechisop/{userid}")]
-        public void slarechisop(int userid, [FromBody] RHDTO value)
+        public void slarechisop(int userid, [FromBody] RHDTO rhdto)
         {   
             Debug.WriteLine("IN POST FELIX");
-        
+            User gevondenUser = _mdc.users.Where(u => u.Id.Equals(userid)).Single();
+            Debug.WriteLine(gevondenUser.Email);
+            RecommendationHistory rh = new RecommendationHistory();
+            rh.Artist = rhdto.Artist;
+            rh.Keuze = rhdto.Keuze;
+            rh.Spotifytrackid = rhdto.Spotifytrackid;
+            rh.Track = rhdto.Track;
+            rh.Jsonstring = rhdto.Jsonstring;
+            rh.Eigenaar = gevondenUser;
+            _mdc.recommendationhistories.Add(rh);
+            _mdc.SaveChanges();
+            
+           
+        }
+        [HttpGet("allerh/{userid}")]
+        public IEnumerable<RecommendationHistory> allerh(int userid) {      
+            // filter allen van de user eruit
+
+            return _mdc.recommendationhistories;
         }
         // DELETE api/<UserController>/5
         [HttpDelete("{id}")]
