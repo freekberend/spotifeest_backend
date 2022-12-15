@@ -3,9 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.4.33110.190
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Spotifeest", "Spotifeest.csproj", "{FE6DFA33-C496-45D8-86B9-5B2A2EFFF67E}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Spotifeest", "Spotifeest\Spotifeest.csproj", "{FE6DFA33-C496-45D8-86B9-5B2A2EFFF67E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DataLayer", "..\DataLayer\DataLayer.csproj", "{9150B946-F65C-4405-BDE3-F8410376D69C}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DataLayer", "DataLayer\DataLayer.csproj", "{9150B946-F65C-4405-BDE3-F8410376D69C}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
