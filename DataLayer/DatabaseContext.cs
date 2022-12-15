@@ -9,8 +9,5 @@ namespace DataLayer
         public DbSet<Party> parties { get; set; }
         public DbSet<Preference> preferences { get; set; }
 
-        public DbSet<UserParty> userparties { get; set; }
-        public DbSet<UserPreference> userpreferences { get; set; }
-
     }
 }

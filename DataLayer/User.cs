@@ -13,6 +13,13 @@ namespace DataLayer
         public string Email { get; set; }
         public string Password { get; set; }
         public string Token { get; set; }
+        public virtual ICollection<Party> Parties { get; set; }
+        public virtual ICollection<Preference> Preferences { get; set; }
+
+        public User()
+        {
+            this.Parties = new HashSet<Party>();
+        }
 
     }
 }

@@ -17,6 +17,7 @@ namespace DataLayer
         public string Oorsprong1 { get; set; }
         public string Oorsprong2 { get; set; }
         public string Oorsprong3 { get; set; }
+        public virtual ICollection<User> Users { get; set; }
 
     }
 }
