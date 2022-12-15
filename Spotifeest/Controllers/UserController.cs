@@ -3,8 +3,6 @@ using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
 using System.IO;
 
-// For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-
 namespace Spotifeest.Controllers
 {
     [Route("")]
@@ -32,7 +30,7 @@ namespace Spotifeest.Controllers
             return "value";
         }
 
-        // POST api/<UserController>
+        // POST API / Register User
         [EnableCors]
         [Route("createuser")]
         [HttpPost]
@@ -59,7 +57,7 @@ namespace Spotifeest.Controllers
             return user;
         }
 
-        // POST api/<UserController>
+        // POST API / Login User
         [EnableCors]
         [Route("loginuser")]
         [HttpPost]
