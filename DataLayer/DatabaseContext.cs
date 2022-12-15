@@ -8,6 +8,7 @@ namespace DataLayer
         public DbSet<User> users { get; set; }
         public DbSet<Party> parties { get; set; }
         public DbSet<Preference> preferences { get; set; }
+        public DbSet<RecommendationHistory> recommendationhistories { get; set; }
 
     }
 }
