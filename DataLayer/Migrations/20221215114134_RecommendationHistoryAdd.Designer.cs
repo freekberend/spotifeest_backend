@@ -3,6 +3,7 @@ using DataLayer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -10,9 +11,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace DataLayer.Migrations
 {
     [DbContext(typeof(DatabaseContext))]
-    partial class DatabaseContextModelSnapshot : ModelSnapshot
+    [Migration("20221215114134_RecommendationHistoryAdd")]
+    partial class RecommendationHistoryAdd
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -87,44 +90,6 @@ namespace DataLayer.Migrations
                     b.ToTable("preferences");
                 });
 
-            modelBuilder.Entity("DataLayer.RecommendationHistory", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<string>("Artist")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("EigenaarId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Jsonstring")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Keuze")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Spotifytrackid")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Track")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("EigenaarId");
-
-                    b.ToTable("recommendationhistories");
-                });
-
             modelBuilder.Entity("DataLayer.User", b =>
                 {
                     b.Property<int>("Id")
@@ -193,17 +158,6 @@ namespace DataLayer.Migrations
                         .IsRequired();
 
                     b.Navigation("Feest");
-                });
-
-            modelBuilder.Entity("DataLayer.RecommendationHistory", b =>
-                {
-                    b.HasOne("DataLayer.User", "Eigenaar")
-                        .WithMany()
-                        .HasForeignKey("EigenaarId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Eigenaar");
                 });
 
             modelBuilder.Entity("PartyUser", b =>

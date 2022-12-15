@@ -1,6 +1,7 @@
 ﻿using DataLayer;
 using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
+using System.Diagnostics;
 using System.IO;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
@@ -82,6 +83,12 @@ namespace Spotifeest.Controllers
         {
         }
 
+        [HttpPost("slarechisop/{userid}")]
+        public void slarechisop(int userid, [FromBody] RHDTO value)
+        {   
+            Debug.WriteLine("IN POST FELIX");
+        
+        }
         // DELETE api/<UserController>/5
         [HttpDelete("{id}")]
         public void Delete(int id)
