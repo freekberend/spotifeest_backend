@@ -64,7 +64,7 @@ jobs:
       with:
         app-name: ${{ env.AZURE_WEBAPP_NAME }}
         package: ${{ env.AZURE_WEBAPP_PACKAGE_PATH }}
-        publish-profile: ${{ secrets.yc2211SpotifeestCsharp_9A18 }}
+        publish-profile: ${{ secrets.yc2211SpotifeestCsharp_2AF2 }}
     - name: Azure Login
       uses: azure/login@v1
       with:
