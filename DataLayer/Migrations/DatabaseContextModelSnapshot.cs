@@ -16,7 +16,7 @@ namespace DataLayer.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "7.0.0")
+                .HasAnnotation("ProductVersion", "7.0.1")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
@@ -125,6 +125,40 @@ namespace DataLayer.Migrations
                     b.ToTable("recommendationhistories");
                 });
 
+            modelBuilder.Entity("DataLayer.Reiziger", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Naam")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("traveler");
+                });
+
+            modelBuilder.Entity("DataLayer.Trein", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("TreinNaam")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("trains");
+                });
+
             modelBuilder.Entity("DataLayer.User", b =>
                 {
                     b.Property<int>("Id")
@@ -184,6 +218,21 @@ namespace DataLayer.Migrations
                     b.ToTable("PreferenceUser");
                 });
 
+            modelBuilder.Entity("ReizigerTrein", b =>
+                {
+                    b.Property<int>("ReizigersId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("TreinenId")
+                        .HasColumnType("int");
+
+                    b.HasKey("ReizigersId", "TreinenId");
+
+                    b.HasIndex("TreinenId");
+
+                    b.ToTable("ReizigerTrein");
+                });
+
             modelBuilder.Entity("DataLayer.Preference", b =>
                 {
                     b.HasOne("DataLayer.Party", "Feest")
@@ -232,6 +281,21 @@ namespace DataLayer.Migrations
                     b.HasOne("DataLayer.User", null)
                         .WithMany()
                         .HasForeignKey("UsersId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("ReizigerTrein", b =>
+                {
+                    b.HasOne("DataLayer.Reiziger", null)
+                        .WithMany()
+                        .HasForeignKey("ReizigersId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("DataLayer.Trein", null)
+                        .WithMany()
+                        .HasForeignKey("TreinenId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });

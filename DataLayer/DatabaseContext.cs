@@ -9,6 +9,7 @@ namespace DataLayer
         public DbSet<Party> parties { get; set; }
         public DbSet<Preference> preferences { get; set; }
         public DbSet<RecommendationHistory> recommendationhistories { get; set; }
-
+        public DbSet<Trein> trains { get; set;}
+        public DbSet<Reiziger> traveler { get; set; }
     }
 }
