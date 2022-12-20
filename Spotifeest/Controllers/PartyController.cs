@@ -7,8 +7,6 @@ using System.IO;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 
-// For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-
 namespace Spotifeest.Controllers
 {
     [Route("api/[controller]")]
@@ -28,7 +26,6 @@ namespace Spotifeest.Controllers
         {
             return _partydbContext.parties;
         }
-
 
         [EnableCors]
         [HttpGet("{feestcode}/{token}")]
@@ -94,65 +91,8 @@ namespace Spotifeest.Controllers
             // return een zelfgeformatteerd JSON-object met fout
             return "{\"Fout\": \""+ foutzoeker + "\"}";
         }
-/*
-        // GET api/<PartyController>/5
-        [EnableCors]
-        [HttpGet("{feestcode}/{token}")]
-        public string ZoekParty(string feestcode, string token)
-        {
-            Console.WriteLine(feestcode);
-            Console.WriteLine(token);
-            string teruggeven = "-";
-            IEnumerable<Party> feestjeslokaal = _partydbContext.parties;
-            // Party party = null;
-            foreach (Party feestjeloc in feestjeslokaal)
-            {
-                Console.WriteLine("FeestID: ");
-                Console.WriteLine(feestjeloc.FeestCode);
-                if (feestjeloc.FeestCode.Equals(feestcode)) //Als de u.ID gelijk is aan de meegegeven ID)
-                {
-                    teruggeven += feestjeloc.Id + "{{-";
-                    // party = feestjeloc;
-                    //foreach loop waar gezocht word in de lijst met alle users, om te kijken of de user al bestaat
-                    IEnumerable<User> userslokaal = _partydbContext.users;
-                    foreach (User userloc in userslokaal)
-                    {
-                        Console.WriteLine("UserID: ");
-                        Console.WriteLine(userloc.Id);
-                        if (userloc.Token.Equals(token))
-                        {
 
-                            IEnumerable<User> temp = feestjeloc.Users.Where(u => u.Id.Equals(userloc.Id));
-                            if (temp.Count() != 0)
-                            {
-                                teruggeven += userloc.Id + "-";
-                                feestjeloc.Users.Add(userloc);
-                                _partydbContext.SaveChanges();
-                            }
-                            else
-                            {
-                                teruggeven += "fout";
-                                return teruggeven;
-                            }
-            
-                            //voeg toe aan lijst
-                        }
-                        else
-                        {
-                        }
-                    }
-                 
-                }
-                else
-                {
-                    //return "je bent al lid of de party bestaat niet";
-                }
-            }
-            
-            return teruggeven;
-        }*/
-
-        // POST api/<PartyController>
+        // POST API / Create a Party
         [EnableCors]
         [Route("createparty")]
         [HttpPost]
