@@ -27,6 +27,7 @@ namespace Spotifeest.Controllers
             return _partydbContext.parties;
         }
 
+        // GET: api/<PartyController>/{feestcode}/{token}
         [EnableCors]
         [HttpGet("{feestcode}/{token}")]
         public string ZoekParty2(string feestcode, string token)
