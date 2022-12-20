@@ -11,15 +11,15 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace DataLayer.Migrations
 {
     [DbContext(typeof(DatabaseContext))]
-    [Migration("20221214133631_EersteMigratie")]
-    partial class EersteMigratie
+    [Migration("20221219140345_test")]
+    partial class test
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "7.0.0")
+                .HasAnnotation("ProductVersion", "7.0.1")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
@@ -32,11 +32,18 @@ namespace DataLayer.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
+                    b.Property<bool>("Closed")
+                        .HasColumnType("bit");
+
                     b.Property<string>("FeestCode")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("FeestNaam")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("FeestOwner")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
@@ -87,6 +94,44 @@ namespace DataLayer.Migrations
                     b.ToTable("preferences");
                 });
 
+            modelBuilder.Entity("DataLayer.RecommendationHistory", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Artist")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("EigenaarId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Jsonstring")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Keuze")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Spotifytrackid")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Track")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("EigenaarId");
+
+                    b.ToTable("recommendationhistories");
+                });
+
             modelBuilder.Entity("DataLayer.User", b =>
                 {
                     b.Property<int>("Id")
@@ -118,13 +163,13 @@ namespace DataLayer.Migrations
 
             modelBuilder.Entity("PartyUser", b =>
                 {
-                    b.Property<int>("PartyId")
+                    b.Property<int>("PartiesId")
                         .HasColumnType("int");
 
                     b.Property<int>("UsersId")
                         .HasColumnType("int");
 
-                    b.HasKey("PartyId", "UsersId");
+                    b.HasKey("PartiesId", "UsersId");
 
                     b.HasIndex("UsersId");
 
@@ -157,11 +202,22 @@ namespace DataLayer.Migrations
                     b.Navigation("Feest");
                 });
 
+            modelBuilder.Entity("DataLayer.RecommendationHistory", b =>
+                {
+                    b.HasOne("DataLayer.User", "Eigenaar")
+                        .WithMany()
+                        .HasForeignKey("EigenaarId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Eigenaar");
+                });
+
             modelBuilder.Entity("PartyUser", b =>
                 {
                     b.HasOne("DataLayer.Party", null)
                         .WithMany()
-                        .HasForeignKey("PartyId")
+                        .HasForeignKey("PartiesId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
