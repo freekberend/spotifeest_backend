@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Reflection.Metadata;
 using System.Text;
@@ -24,7 +25,7 @@ namespace DataLayer
                 FeestVisitors = value;
             }
         }*/
-        //public User FeestOwner { get; set; }
+        public string FeestOwner { get; set; }
         public virtual ICollection<User> Users { get; set; }
         public Party()
         {

@@ -5,7 +5,7 @@
 namespace DataLayer.Migrations
 {
     /// <inheritdoc />
-    public partial class EersteMigratie : Migration
+    public partial class partyprut : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -17,7 +17,9 @@ namespace DataLayer.Migrations
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     FeestCode = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    FeestNaam = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                    FeestNaam = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Closed = table.Column<bool>(type: "bit", nullable: false),
+                    FeestOwner = table.Column<string>(type: "nvarchar(max)", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -69,21 +71,45 @@ namespace DataLayer.Migrations
                 name: "PartyUser",
                 columns: table => new
                 {
-                    PartyId = table.Column<int>(type: "int", nullable: false),
+                    PartiesId = table.Column<int>(type: "int", nullable: false),
                     UsersId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_PartyUser", x => new { x.PartyId, x.UsersId });
+                    table.PrimaryKey("PK_PartyUser", x => new { x.PartiesId, x.UsersId });
                     table.ForeignKey(
-                        name: "FK_PartyUser_parties_PartyId",
-                        column: x => x.PartyId,
+                        name: "FK_PartyUser_parties_PartiesId",
+                        column: x => x.PartiesId,
                         principalTable: "parties",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_PartyUser_users_UsersId",
                         column: x => x.UsersId,
+                        principalTable: "users",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "recommendationhistories",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Artist = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Track = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Spotifytrackid = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Keuze = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Jsonstring = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    EigenaarId = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_recommendationhistories", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_recommendationhistories_users_EigenaarId",
+                        column: x => x.EigenaarId,
                         principalTable: "users",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
@@ -127,6 +153,11 @@ namespace DataLayer.Migrations
                 name: "IX_PreferenceUser_UsersId",
                 table: "PreferenceUser",
                 column: "UsersId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_recommendationhistories_EigenaarId",
+                table: "recommendationhistories",
+                column: "EigenaarId");
         }
 
         /// <inheritdoc />
@@ -137,6 +168,9 @@ namespace DataLayer.Migrations
 
             migrationBuilder.DropTable(
                 name: "PreferenceUser");
+
+            migrationBuilder.DropTable(
+                name: "recommendationhistories");
 
             migrationBuilder.DropTable(
                 name: "preferences");
