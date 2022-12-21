@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Spotifeest.Classes;
 using System.Diagnostics;
 using System.IO;
 using System.Text.Json;
@@ -130,6 +131,21 @@ namespace Spotifeest.Controllers
         [HttpDelete("{id}")]
         public void Delete(int id)
         {
+        }
+
+        // GET Api/Partycontroller/
+        [HttpGet("ledenlijst/{feestcode}")]
+        public UsersPartyDTO Hallo(string feestcode)
+        {
+            Debug.WriteLine("Ik ben er");
+            //geef terug alle Ledenamen (gebaseerd op Id) van
+            //de huidige actieve party (wat de feestcode uit local storage is, gekoppeld aan het partyId, via de PartyUser tussentabel
+            Party feestje = _partydbContext.parties.Include("Users").Where(p => p.FeestCode.Equals(feestcode)).First();
+            Debug.WriteLine(feestje.Users.Count());
+            UsersPartyDTO o = new UsersPartyDTO(feestje);
+        return o;   
+
+
         }
     }
 }
