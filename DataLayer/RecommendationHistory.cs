@@ -13,7 +13,7 @@ namespace DataLayer
         public string Track { get; set; }
         public string Spotifytrackid { get; set; }
         public string Keuze { get; set; }
-        public string Jsonstring { get; set; }
+        public string feestCode { get; set; }
 
         public User Eigenaar { get; set;}
     }
