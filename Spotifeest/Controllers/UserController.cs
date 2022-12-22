@@ -81,18 +81,20 @@ namespace Spotifeest.Controllers
         {
         }
 
-        [HttpPost("slarechisop/{userid}")]
-        public void slarechisop(int userid, [FromBody] RHDTO rhdto)
+        [HttpPost("slarechisop/{token}/{feestcode}")]
+        public void slarechisop(string token, string feestCode, [FromBody] RHDTO rhdto)
         {   
             Debug.WriteLine("IN POST FELIX");
-            User gevondenUser = _mdc.users.Where(u => u.Id.Equals(userid)).Single();
+            // binnen een if om te controleren of gebruiker bestaat
+            User gevondenUser = _mdc.users.Where(u => u.Token.Equals(token)).Single();
             Debug.WriteLine(gevondenUser.Email);
             RecommendationHistory rh = new RecommendationHistory();
             rh.Artist = rhdto.Artist;
             rh.Keuze = rhdto.Keuze;
             rh.Spotifytrackid = rhdto.Spotifytrackid;
             rh.Track = rhdto.Track;
-            rh.Jsonstring = rhdto.Jsonstring;
+            // moet nog gevalideerd worden
+            rh.feestCode = feestCode;
             rh.Eigenaar = gevondenUser;
             _mdc.recommendationhistories.Add(rh);
             _mdc.SaveChanges();
