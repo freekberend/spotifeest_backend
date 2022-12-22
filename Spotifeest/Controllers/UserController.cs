@@ -83,11 +83,28 @@ namespace Spotifeest.Controllers
 
         [HttpPost("slarechisop/{token}/{feestcode}")]
         public void slarechisop(string token, string feestCode, [FromBody] RHDTO rhdto)
-        {   
+        {
+            User gevondenUser;
+            try
+            {
+                gevondenUser = _mdc.users.Where(u => u.Token.Equals(token)).Single();
+            }
+            catch (Exception ex)
+            {
+                return;
+            }
             Debug.WriteLine("IN POST FELIX");
+            try
+            {
+                Party gevondenParty = _mdc.parties.Where(p => p.FeestCode.Equals(feestCode)).Single();
+            }
+            catch (Exception ex)
+            {
+                return;
+            }
             // binnen een if om te controleren of gebruiker bestaat
-            User gevondenUser = _mdc.users.Where(u => u.Token.Equals(token)).Single();
-            Debug.WriteLine(gevondenUser.Email);
+            // User gevondenUser = _mdc.users.Where(u => u.Token.Equals(token)).Single();
+            // Debug.WriteLine(gevondenUser.Email);
             RecommendationHistory rh = new RecommendationHistory();
             rh.Artist = rhdto.Artist;
             rh.Keuze = rhdto.Keuze;
