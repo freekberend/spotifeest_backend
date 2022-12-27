@@ -1,4 +1,5 @@
 ﻿using DataLayer;
+using DataLayer.Migrations;
 using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -100,6 +101,11 @@ namespace Spotifeest.Controllers
         [HttpPost]
         public Party Post([FromBody] Party party)
         {
+            JsonSerializerOptions options = new()
+            {
+                ReferenceHandler = ReferenceHandler.Preserve,
+                WriteIndented = true
+            };
 
             PartyCodeGenerator pcg = new PartyCodeGenerator();
             string code = pcg.Main();
@@ -116,9 +122,25 @@ namespace Spotifeest.Controllers
                 }
             }
 
+            User gevondenUser;
+            try
+            {
+                gevondenUser = _partydbContext.users.Where(u => u.Token.Equals(party.FeestOwner)).Single();
+                party.Users.Add(gevondenUser);
+            }
+            catch (Exception ex)
+            {}
+            
+
             _partydbContext.Add(party);
             _partydbContext.SaveChanges();
+            
+            // om recursie te voorkomen stellen we de Users tijdelijk in op null
+            // circulaire referentie is eventueel later op te lossen met een DTO
+            party.Users = null;
+
             return party;
+            //return party;
         }
 
         // PUT api/<PartyController>/5
@@ -143,7 +165,7 @@ namespace Spotifeest.Controllers
             Party feestje = _partydbContext.parties.Include("Users").Where(p => p.FeestCode.Equals(feestcode)).First();
             Debug.WriteLine(feestje.Users.Count());
             UsersPartyDTO o = new UsersPartyDTO(feestje);
-        return o;   
+            return o;   
 
 
         }
