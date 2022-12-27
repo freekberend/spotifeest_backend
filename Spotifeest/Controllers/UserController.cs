@@ -124,6 +124,33 @@ namespace Spotifeest.Controllers
 
             return _mdc.recommendationhistories;
         }
+
+        [HttpGet("groeprecs/{feesttoken}")]
+        public IEnumerable<RecommendationHistory> groeprecs(string feesttoken)
+        {
+
+            // filter allen van de user eruit
+
+            return _mdc.recommendationhistories.Where(p => p.feestCode.Equals(feesttoken));
+        }
+
+        [HttpGet("userrecs/{usertoken}/{feesttoken}")]
+        public IEnumerable<RecommendationHistory> userrecs(string usertoken, string feesttoken)
+        {
+            User gevondenUser;
+            try
+            {
+                gevondenUser = _mdc.users.Where(u => u.Token.Equals(usertoken)).Single();
+                return _mdc.recommendationhistories.Where(p => p.Eigenaar.Equals(gevondenUser)).Where(p => p.feestCode.Equals(feesttoken));
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("een fout");
+                // return "er is een fout";
+                return null;
+            }
+        }
+
         // DELETE api/<UserController>/5
         [HttpDelete("{id}")]
         public void Delete(int id)
