@@ -11,7 +11,7 @@ env:
   AZURE_APIM_SERVICENAME: Spotifeestapi
   AZURE_APIM_API_ID: YC2211SpotifeestAPI
   AZURE_APIM_APPSERVICEURL: https://yc2211spotifeestcsharp.azurewebsites.net
-  SWASHBUCLE_ASPNET_CORE_CLI_PACKAGE_VERSION: 6.0.x
+  SWASHBUCLE_ASPNET_CORE_CLI_PACKAGE_VERSION: 6.4.0
   SWASHBUCKLE_DOTNET_CORE_VERSION: 6.0.x
   API_IMPORT_SPECIFICATION_PATH: Spotifeest\publish\swagger.json
   API_IMPORT_DLL: Spotifeest\bin\Release\net6.0\Spotifeest.dll
